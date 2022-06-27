@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/script.js" defer></script>
+    <title>Libary</title>
+</head>
+
+<body>
+
+    <nav>
+        <div>
+            <h3 id="logo">Libary</h3>
+        </div>
+    </nav>
+    <div class="container">
+        <main>
+            <div id="books">
+
+            </div>
+            <button id="formShow" type="button" class="btn">Create new</button>
+
+            <form action="#" method="post" class="hidden form ">
+                <label for="title">Title</label>
+                <input id="title" name="title" type="text">
+                <label for="author">Author</label>
+                <input id="author" name="author" type="text">
+                <label for="pageNumber">Page Number</label>
+                <input id="pageNumber" name="pageNumber" type="number" min="2" max="10000">
+                <fieldset>
+                    <input type="radio" id="read" name="readingStatus" value="True" checked>
+                    <label for="read">Read</label>
+                    <input type="radio" id="notRead" name="readingStatus" value="False">
+                    <label for="notRead">Not Read</label>
+                    <button id="createBtn" type="submit" class="btn">Create new</button>
+                </fieldset>
+            </form>
+        </main>
+    </div>
+
+
+</body>
+
+</html>
