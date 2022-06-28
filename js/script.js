@@ -7,8 +7,9 @@ const title = document.getElementById("title");
 const author = document.getElementById("author");
 const pageNumber = document.getElementById("pageNumber");
 const radioButtons = document.querySelectorAll('input[name="readingStatus"]');
+const readbtn = document.getElementsByClassName("readbtn");
 const formShow = document.getElementById("formShow");
-// 8
+//
 const myLibrary = [];
 const deleteBooks = () => {
   for (const db of deleteBtn) {
@@ -19,6 +20,34 @@ const deleteBooks = () => {
         if (myLibrary[i].title === text) {
           myLibrary.splice(i, 1);
           db.parentElement.parentElement.remove();
+        }
+      }
+    });
+  }
+};
+const changeReadStatus = () => {
+  for (const btn of readbtn) {
+    btn.addEventListener("click", (e) => {
+      let text =
+        e.target.parentElement.firstElementChild.firstElementChild.textContent;
+      if (btn.classList.contains("read")) {
+        btn.innerHTML = "Not Read";
+        btn.classList.add("notread");
+        btn.classList.remove("read");
+
+        for (let i = 0; i < myLibrary.length; i++) {
+          if (myLibrary[i].title === text) {
+            myLibrary[i].read = false;
+          }
+        }
+      } else {
+        btn.innerHTML = "Read";
+        btn.classList.remove("notread");
+        btn.classList.add("read");
+        for (let i = 0; i < myLibrary.length; i++) {
+          if (myLibrary[i].title === text) {
+            myLibrary[i].read = true;
+          }
         }
       }
     });
@@ -80,25 +109,32 @@ addBookToLibrary(book4);
 for (book of myLibrary) {
   const div = document.createElement("div");
   div.innerHTML = `
-<div class="book">
+<div class="book noselect">
 <ul>
 <li>Title : <span>${book.title}</span> </li>
 <li>Author : ${book.author}</li>
 <li>Pages : ${book.pages}</li>
-<li>Read : ${book.read}</li>
-<button class="btn deleteBtn">Delete</button>
+
+<li class="readbtn  ${book.read == true ? "read" : "notread"}">${
+    book.read === true ? "read" : "Not Read"
+  }</li>
+<button class="btn  deleteBtn">Delete</button>
 </ul>
 </div>
 `;
+
   books.appendChild(div);
 }
 
 createBtn.addEventListener("click", (e) => {
   e.preventDefault();
   let readingStatusOption;
-  for (const radioButton of radioButtons) {
+  for (var radioButton of radioButtons) {
     if (radioButton.checked) {
-      readingStatusOption = Boolean(radioButton.value);
+      readingStatusOption = radioButton.value;
+
+      if (radioButton.value == "False") {
+      }
       break;
     }
   }
@@ -112,26 +148,29 @@ createBtn.addEventListener("click", (e) => {
   addBookToLibrary(newBook);
   const div = document.createElement("div");
   div.innerHTML = `
-  <div class="book">
+  <div class="book noselect">
   <ul>
   <li>Title : <span>${newBook.title}</span> </li>
   <li>Author : ${newBook.author}</li>
   <li>Pages : ${newBook.pages}</li>
-  <li>Read : ${newBook.read}</li>
-  <button class="btn deleteBtn">Delete</button>
+  <li class="readbtn  ${radioButton.value == "True" ? "read" : "notread"}">${
+    radioButton.value === "True" ? "read" : "Not Read"
+  }</li>
+  <button class="btn  deleteBtn">Delete</button>
   </ul>
   </div>
   `;
   books.appendChild(div);
+  changeReadStatus();
   deleteBooks();
   formShow.classList.remove("hidden");
   form.classList.add("hidden");
 
   clearField();
 });
-deleteBooks();
-
 formShow.addEventListener("click", () => {
   formShow.classList.add("hidden");
   form.classList.toggle("hidden");
 });
+changeReadStatus();
+deleteBooks();
